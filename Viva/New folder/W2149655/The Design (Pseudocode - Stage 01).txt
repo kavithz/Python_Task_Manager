@@ -1,0 +1,113 @@
+START
+
+    DEFINE tasks AS an empty list
+    
+    FUNCTION add_task()
+	 DISPLAY "Enter task name:"
+	 INPUT name
+	 IF name is empty THEN
+		DISPLAY "Please enter a proper task name"
+		RETURN
+
+	 DISPLAY "Enter task description:"
+	 INPUT description
+	 IF description is empty THEN
+		DISPLAY "Please enter a proper task description"
+		RETURN
+
+	 DISPLAY "Enter task priority (high, medium ,low):"
+	 INPUT priority
+	 IF priority is not in [high, medium, low] THEN
+	    DISPLAY "Please enter a valid priority level"
+	    RETURN
+
+	 DISPLAY "Enter task due date (yyyy-mm-dd):"
+	 INPUT due_date
+	 IF due_date format is incorrect THEN
+		DISPLAY "Invalid date format"
+		RETURN
+
+	 APPEND [name ,description ,priority , due_date] TO tasks
+ 	 DISPLAY  "Task added successfully!"
+     
+     FUNCTION view_tasks()
+	IF tasks list is empty THEN
+		DISPLAY "No tasks available."
+		RETURN
+	FOR each task in tasks:
+		 DISPLAY task details
+
+     FUNCTION update_task()
+	 CALL view_task()
+	 IF tasks list is empty THEN
+	     RETURN
+
+	 DISPLAY "Enter the task number to update:"
+	 INPUT task_number
+	 IF task_number is invalid THEN
+		DISPLAY "Invalid task number"
+		RETURN
+
+	 DISPLAY "Enter new task name:"
+	 INPUT new_name
+	 IF new_name is not empty THEN
+		UPDATE task description
+
+	 DISPLAY "Enter new task description:"
+	 INPUT new_description
+	 IF new_description is invalid THEN
+		UPDATE task description
+         
+         DISPLAY "Enter new priority:"
+	 INPUT new_priority
+	 IF new_priority is in [high, medium ,low] THEN
+		UPDATE task priority
+
+	 DISPLAY "Task updated successfully!"
+
+
+      FUNCTION delete_task()
+        CALL view_tasks()
+        IF tasks list is empty THEN
+            RETURN
+        
+        DISPLAY "Enter the task number to delete:"
+        INPUT task_number
+        IF task_number is invalid THEN
+            DISPLAY "Invalid task number."
+            RETURN
+        
+        DELETE task from tasks list
+        DISPLAY "Task deleted successfully!"
+
+    FUNCTION main()
+        DISPLAY "Welcome to Task Manager."
+        WHILE TRUE:
+            DISPLAY options: 
+            1. Add task
+            2. View tasks
+            3. Update task
+            4. Delete task
+            5. Exit
+
+            INPUT user_choice
+            IF user_choice is 1 THEN
+                CALL add_task()
+            ELSE IF user_choice is 2 THEN
+                CALL view_tasks()
+            ELSE IF user_choice is 3 THEN
+                CALL update_task()
+            ELSE IF user_choice is 4 THEN
+                CALL delete_task()
+            ELSE IF user_choice is 5 THEN
+                DISPLAY "Thank you for using the system."
+                EXIT
+            ELSE
+                DISPLAY "Invalid input. Please enter a number between 1 and               		5."
+
+    CALL main()
+
+END
+ 
+     
+		
